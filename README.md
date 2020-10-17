@@ -1,0 +1,2 @@
+# Application-Educ-Dapp
+Nasceu durante o Mestrado Acadêmico em Ciência da Computação no Programa de Pós-graduação em Computação (PCOMP) da Universidade Federal do Ceará. Essa aplicação tem o objetivo de publicar o extrato das informações de diplomas e a disponibilização da consulta ao banco de informações de registro dos diplomas, aproveitando a propriedade inalterável da blockchain e o princípio da verificabilidade dos dados para evitar a falsificação de certificados e otimizando o tempo de consulta da veracidade dos dados.
