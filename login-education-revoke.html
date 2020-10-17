@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <title>Educ-Dapp: Sessão iniciada - Instituição</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+	<header>
+		<div id="logo">Educ-Dapp</div>
+		<nav>  
+			<ul>
+				<li><a href="index.html">Home</a>
+				<li><a href="certificate-query.html">Consultar Certificado</a>
+				<li><a href="login.html">Login</a>
+			</ul>
+		</nav>
+	</header>
+	<section>
+		<p align="justify"><strong>Essa área é destinada para realizar a revogação de diplomas das IES públicas e privadas 
+		que possuem prerrogativa para o registro dos diplomas por elas expedidos. Basta informar o CPF do estudante para revogar 
+		o acesso do mesmo na blockchain.
+
+		
+		</strong></p>
+	</section>
+	<section id="pageContent">
+		<main role="main">
+			
+			<div class="container" >
+				<a class="links" id="paracadastro"></a>
+				<a class="links" id="paralogin"></a>
+				 
+				<div class="content">      
+				  
+				  <div id="login">
+					<form method="post" action=""> 
+					  <h1>Revogar Certificado</h1> 
+					  <p> 
+						<label for="cpf">CPF do estudante</label>
+						<input id="cpf" name="cpf" required="required" type="text"/> 
+					  </p>
+					   
+					  <p> 
+						<button id="button1">Revogar</button>	
+					  </p>
+					</form>
+				  </div>
+				</div>
+			  </div>  
+
+		</main>
+	</section>
+	
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="http://rawgit.com/ethereum/web3.js/0.16.0/dist/web3.min.js"></script>
+
+	<script>
+	
+	if (typeof web3 !== 'undefined') {
+					ethereum.enable();
+				web3 = new Web3(web3.currentProvider);
+			} else {
+				web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/a9ae8d50693b41d3842852488bf40ea7"));
+			}
+			var account = web3.eth.accounts[0];
+			
+			var accountInterval = setInterval(function() {
+				var accountInterval = setInterval(function() {
+				  if (web3.eth.accounts[0] !== account) {
+					account = web3.eth.accounts[0];
+					document.getElementById("address").innerHTML = account;
+				  }
+				}, 100);
+			});
+	
+			var dappBenchContract = web3.eth.contract(
+				[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "x",
+				"type": "bytes32"
+			}
+		],
+		"name": "bytes32ToString",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "nameGovernment",
+				"type": "string"
+			},
+			{
+				"name": "idGovernment",
+				"type": "string"
+			},
+			{
+				"name": "password",
+				"type": "string"
+			}
+		],
+		"name": "registerGovernment",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "nameInstitution",
+				"type": "string"
+			},
+			{
+				"name": "cnpj",
+				"type": "string"
+			},
+			{
+				"name": "password",
+				"type": "string"
+			}
+		],
+		"name": "registerInstitutionEducation",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "nameInstitution",
+				"type": "string"
+			},
+			{
+				"name": "cnpj",
+				"type": "string"
+			}
+		],
+		"name": "registerInstitutionGovernment",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_value",
+				"type": "bytes32[]"
+			}
+		],
+		"name": "registerStudentDiploma",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "cpf",
+				"type": "string"
+			}
+		],
+		"name": "revokeDiploma",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "cpf",
+				"type": "string"
+			}
+		],
+		"name": "getExistDiploma",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "cnpj",
+				"type": "string"
+			}
+		],
+		"name": "getInstitution",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "cpf",
+				"type": "string"
+			}
+		],
+		"name": "getStudentDiploma",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "cnpj",
+				"type": "string"
+			}
+		],
+		"name": "getValidateInstitution",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "governmentIds",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "institutionIds",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "cnpj",
+				"type": "string"
+			},
+			{
+				"name": "password",
+				"type": "string"
+			},
+			{
+				"name": "tipoEntidade",
+				"type": "string"
+			}
+		],
+		"name": "login",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "studentIds",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+			);
+
+		 var dappBench = dappBenchContract.at('0xa84abC0fb7334b4C47c5d20Df2ee4C281Af738f1');
+			console.log(dappBench);
+			address =  account
+        
+		$("#button1").click(function(web3) {
+			 
+		var tx = dappBench.getExistDiploma($("#cpf")[0].value,{ 
+			  from: address,
+			  gas: "3000000",
+			  to: "0xa84abC0fb7334b4C47c5d20Df2ee4C281Af738f1",
+			  value: "0",
+			  data: ""
+	 }, function(err, transactionHash) {
+	  if (!err){
+		console.log(transactionHash); 
+        if(transactionHash == false){
+		   window.alert("Diploma não registrado!");
+		}else{
+			
+			var tx = dappBench.revokeDiploma($("#cpf")[0].value,{ 
+				   from: address,
+				   gas: "3000000",
+				   to: "0xa84abC0fb7334b4C47c5d20Df2ee4C281Af738f1",
+				   value: "0",
+				   data: ""
+		  }, function(err, transactionHash) {
+		   if (!err){
+			 console.log(transactionHash); 
+			 window.alert("Diploma revogado com sucesso!");
+
+		   }
+		 })
+		}
+		
+	  }
+	})		 
+	})
+
+	</script>
+
+
+</body>
+
+</html>

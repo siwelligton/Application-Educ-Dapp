@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <title>Educ-Dapp: Sessão iniciada - Instituição</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+	<header>
+		<div id="logo">Educ-Dapp</div>
+		<nav>  
+			<ul>
+				<li><a href="index.html">Home</a>
+				<li><a href="certificate-query.html">Consultar Certificado</a>
+				<li><a href="login.html">Login</a>
+			</ul>
+		</nav>
+	</header>
+	<section>
+		<p align="justify"><strong>Essa área é destinada para realizar o cadastro ou revogação de diplomas das IES públicas e privadas 
+		que possuem prerrogativa para o registro dos diplomas por elas expedidos. Os dados exigidos no cadastro dos diplomas 
+		segue o ato administrativo da Portaria de número 1.095 pelo Ministério da Educação do Brasil.
+		
+		</strong></p>
+	</section>
+	<section id="pageContent">
+		<main role="main">
+			
+				<div class="container" >
+						<a class="links" id="paracadastro"></a>
+						<a class="links" id="paralogin"></a>
+						 
+						<div class="content">      
+						  
+						  <div id="login">	 
+							  <p> 
+								<button id="button1">Cadastrar Diploma</button>	
+							  </p>
+
+							  <p> 
+								<button id="button2">Revogar Diploma</button>	
+							  </p>
+							
+						  </div>
+						</div>
+					  </div>  
+
+		</main>
+	</section>
+	
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="http://rawgit.com/ethereum/web3.js/0.16.0/dist/web3.min.js"></script>
+
+	<script>
+	
+
+	$("#button1").click(function() {
+			 
+		    window.location.href = "http://ufcpcompquixada.epizy.com/login-education-register.html";
+		 })
+
+    $("#button2").click(function() {
+			 
+			 window.location.href = "http://ufcpcompquixada.epizy.com/login-education-revoke.html";
+		})
+
+	</script>
+
+
+</body>
+
+</html>

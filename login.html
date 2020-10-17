@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <title>Educ-Dapp: Login</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+	<header>
+		<div id="logo">Educ-Dapp</div>
+		<nav>  
+			<ul>
+				<li><a href="index.html">Home</a>
+				<li><a href="certificate-query.html">Consultar Certificado</a>
+				<li><a href="login.html">Login</a>
+			</ul>
+		</nav>
+	</header>
+	<section>
+		<p align="justify"><strong>Essa área de login/cadastro é somente para instituições de ensino superior e o governo que gerencia as mesmas.
+		É permitido somente o cadastro de instituições reconhecidas pelo governo.
+		</strong></p>
+	</section>
+	<section id="pageContent">
+		<main role="main">
+			
+				<div class="container" >
+						<a class="links" id="paracadastro"></a>
+						<a class="links" id="paralogin"></a>
+						 
+						<div class="content">      
+						  
+						  <div id="login">
+							
+							  <h1>Login</h1> 
+							  <p> 
+								<label for="usuario_entidade">Usuário</label>
+								<input id="usuario_entidade" name="usuario_entidade" required="required" type="text"/>
+							  </p>
+							   
+							  <p> 
+								<label for="senha_login">Senha</label>
+								<input id="senha_login" name="senha_login" required="required" type="password"/> 
+							  </p>
+							  <p>
+							  <label for="tipo_entidade">Selecione o tipo de entidade</label>
+								<select name="tipo_entidade" id="tipo_entidade">
+									  <option value="ies">Instituição Educacional</option>
+									  <option value="governo">Governo</option>
+								</select>
+							  </p>	
+
+							  <p> 
+								
+								<button id="button1">Logar</button>	
+							  </p>
+							   
+							  <p class="link">
+								Ainda não tem conta?
+								<a href="#paracadastro">Cadastre-se</a>
+							  </p>
+							
+						  </div>
+					 
+						  
+						  <div id="cadastro">
+							
+							  <h1>Cadastro</h1> 
+							   
+							  <p> 
+								<label for="nome_instituicao">Nome da Instituição</label>
+								<input id="nome_instituicao" name="nome_instituicao" required="required" type="text"/>
+							  </p>
+							   
+							  <p> 
+								<label for="cnpj">CNPJ</label>
+								<input id="cnpj" name="cnpj" required="required" type="text"/> 
+							  </p>
+							   
+							  <p> 
+								<label for="senha_cadastro">Defina uma Senha</label>
+								<input id="senha_cadastro" name="senha_cadastro" required="required" type="password"/>
+							  </p>
+							   
+							  <p> 
+								
+								<button id="button2">Cadastrar</button>	
+							  </p>
+							   
+							  <p class="link">  
+								Já tem conta?
+								<a href="#paralogin"> Ir para Login </a>
+							  </p>
+							
+						  </div>
+						</div>
+					  </div>  
+
+		</main>
+	</section>
+		
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="http://rawgit.com/ethereum/web3.js/0.16.0/dist/web3.min.js"></script>
+
+	<script>
+	
+	if (typeof web3 !== 'undefined') {
+					ethereum.enable();
+				web3 = new Web3(web3.currentProvider);
+			} else {
+				web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/a9ae8d50693b41d3842852488bf40ea7"));
+			}
+			var account = web3.eth.accounts[0];
+			
+			var accountInterval = setInterval(function() {
+				var accountInterval = setInterval(function() {
+				  if (web3.eth.accounts[0] !== account) {
+					account = web3.eth.accounts[0];
+					document.getElementById("address").innerHTML = account;
+				  }
+				}, 100);
+			});
+	
+			var dappBenchContract = web3.eth.contract(
+				[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "x",
+				"type": "bytes32"
+			}
+		],
+		"name": "bytes32ToString",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "nameGovernment",
+				"type": "string"
+			},
+			{
+				"name": "idGovernment",
+				"type": "string"
+			},
+			{
+				"name": "password",
+				"type": "string"
+			}
+		],
+		"name": "registerGovernment",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "nameInstitution",
+				"type": "string"
+			},
+			{
+				"name": "cnpj",
+				"type": "string"
+			},
+			{
+				"name": "password",
+				"type": "string"
+			}
+		],
+		"name": "registerInstitutionEducation",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "nameInstitution",
+				"type": "string"
+			},
+			{
+				"name": "cnpj",
+				"type": "string"
+			}
+		],
+		"name": "registerInstitutionGovernment",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_value",
+				"type": "bytes32[]"
+			}
+		],
+		"name": "registerStudentDiploma",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "cpf",
+				"type": "string"
+			}
+		],
+		"name": "revokeDiploma",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "cpf",
+				"type": "string"
+			}
+		],
+		"name": "getExistDiploma",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "cnpj",
+				"type": "string"
+			}
+		],
+		"name": "getInstitution",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "cpf",
+				"type": "string"
+			}
+		],
+		"name": "getStudentDiploma",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "cnpj",
+				"type": "string"
+			}
+		],
+		"name": "getValidateInstitution",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "governmentIds",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "institutionIds",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "cnpj",
+				"type": "string"
+			},
+			{
+				"name": "password",
+				"type": "string"
+			},
+			{
+				"name": "tipoEntidade",
+				"type": "string"
+			}
+		],
+		"name": "login",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "studentIds",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+
+			);
+
+
+		 var dappBench = dappBenchContract.at('0xa84abC0fb7334b4C47c5d20Df2ee4C281Af738f1');
+			console.log(dappBench);
+			address =  account
+        
+		$("#button1").click(function(web3) {
+			
+			var tx = dappBench.login($("#usuario_entidade")[0].value ,$("#senha_login")[0].value,$("#tipo_entidade")[0].value,{ 
+			  from: address,
+			  gas: "3000000",
+			  to: "0xa84abC0fb7334b4C47c5d20Df2ee4C281Af738f1",
+			  value: "0",
+			  data: ""
+	 }, function(err, transactionHash) {
+	  if (!err){
+		console.log(transactionHash); 
+        if(transactionHash == false){
+		   window.alert("Usuário não cadastrado");
+		}else{
+			var e = document.getElementById("tipo_entidade");
+			var itemSelecionado = e.options[e.selectedIndex].value;
+			if(itemSelecionado == "ies"){
+				window.location.href = "http://ufcpcompquixada.epizy.com/login-education.html";
+			}else{
+				window.location.href = "http://ufcpcompquixada.epizy.com/login-government.html";
+			}
+			
+		}
+		
+	  }
+	})
+	})
+
+	$("#button2").click(function(web3) {
+			 
+		var tx = dappBench.getValidateInstitution($("#cnpj")[0].value,{ 
+			  from: address,
+			  gas: "3000000",
+			  to: "0x12FefF8cF21070294a4fC5D0719BaA4BE31A9115",
+			  value: "0",
+			  data: ""
+	 }, function(err, transactionHash) {
+	  if (!err){
+		console.log(transactionHash); 
+        if(transactionHash == false){
+		   window.alert("Instituição não reconhecida pela Governo!");
+		}else{
+			
+			var tx = dappBench.registerInstitutionEducation($("#nome_instituicao")[0].value,$("#cnpj")[0].value,$("#senha_cadastro")[0].value,{ 
+				   from: address,
+				   gas: "3000000",
+				   to: "0x12FefF8cF21070294a4fC5D0719BaA4BE31A9115",
+				   value: "0",
+				   data: ""
+		  }, function(err, transactionHash) {
+		   if (!err){
+			 console.log(transactionHash); 
+			 window.alert("Instituição cadastrada com sucesso!");
+		   }
+		 })
+		}
+		
+	  }
+	})		 
+	})
+
+	</script>
+
+
+</body>
+
+</html>
